@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "home/index"
-  root to: "home#index"
+  
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
+  authenticated :user do
+    root to: "home#dashboard", as: :authenticated_user_root
+  end
+  root to: "home#index"
   # root "posts#index"
 end
